@@ -25,7 +25,6 @@ User.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
     const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
     const hash = await bcrypt.hash(this.password, salt);
-    console.log(hash);
     this.password = hash;
     next();
 });

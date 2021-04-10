@@ -16,7 +16,7 @@ const port = 8000;
 
 const run = async () => {
     await mongoose.connect('mongodb://localhost/todoapi',
-        { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
+        { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false});
 
     app.listen(port, ()=>{
         console.log('server started on port ' + port);
