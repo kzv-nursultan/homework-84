@@ -35,8 +35,22 @@ router.post('/session', async (req, res)=>{
 });
 
 router.get('/', async (req,res)=>{
-    const users = await User.find();
-    res.send(users);
+    try {
+        const users = await User.find();
+        res.send(users);
+    } catch (error) {
+        res.status(500).send(error);
+    }
 });
+
+router.delete('/:id', async (req, res)=>{
+    try {
+        await User.findByIdAndDelete(req.params.id);
+        const users = await User.find();
+        res.send(users);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+})
 
 module.exports = router;
