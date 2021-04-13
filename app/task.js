@@ -30,15 +30,24 @@ router.get('/', auth, async (req, res) => {
 router.put('/:id', auth, async (req, res)=>{
     const data = req.body;
     const task = await Task.findById(req.params.id);
-    if(data.user == task.user) {
+    if (data.user) {
+        if(data.user == task.user) {
+            try {
+                const editedTask = await Task.findByIdAndUpdate(req.params.id, data,{ new: true, runValidators: true });
+                res.send(editedTask);
+            } catch (error){
+                res.status(500).send({error_message: error.errors.status.message});
+            };
+        } else {
+            return res.status(400).send('You can not edit user');
+        };
+    } else {
         try {
             const editedTask = await Task.findByIdAndUpdate(req.params.id, data,{ new: true, runValidators: true });
             res.send(editedTask);
         } catch (error){
             res.status(500).send({error_message: error.errors.status.message});
         };
-    } else {
-        return res.status(400).send('You can not edit user');
     };
 });
 

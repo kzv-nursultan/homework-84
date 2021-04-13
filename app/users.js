@@ -22,7 +22,7 @@ router.post('/session', async (req, res)=>{
     const isMatch = await user.checkPassword(req.body.password);
 
     if(!isMatch){
-        res.status(400).send('user not found');
+        res.status(400).send('User not found');
     };
 
     try {

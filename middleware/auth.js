@@ -3,7 +3,7 @@ const User = require('../models/User');
 const auth = async (req,res,next) => {
     const token = req.get('Authorization');
     if(!token){
-        return res.send(401).send('Token not exist');
+        return res.status(401).send('Token not exist');
     };
 
     const user = await User.findOne({token});
